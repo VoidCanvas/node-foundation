@@ -1,0 +1,19 @@
+{
+	"server": {
+		"port": 1729,
+		"baseApiPath": "/api"
+	},
+	"client":{
+		"baseFolder": "./frontend"
+	},
+	"localRequire":{
+		"paths":{
+
+		}
+	},
+	"errors":{
+		"404": {
+			"path": "404.html"
+		}
+	}
+}
