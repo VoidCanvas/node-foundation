@@ -1,6 +1,8 @@
 var router = require('express').Router(),
 	config = localrequire('config.json');
     Resource = localrequire('core.infrastructure.resource');
+    
+var PingModel = localrequire('backend.models.ping.model');
 /**
  * This sets basic crud routes
  */
@@ -8,7 +10,10 @@ var router = require('express').Router(),
 
 // test override of GET '/' path
 ping.findAll = function (req, res) {
-    res.end("PONG!");
+	var ping = new PingModel();
+	ping.validate();
+
+    res.end(ping.validationErrors);
 };
 
 
@@ -18,5 +23,5 @@ exports.init = function (app) {
     // middleware here
     var path = config.server.baseApiPath;
     path+="/ping";
-    app.use('/api/ping', router);
+    app.use(path, router);
 };

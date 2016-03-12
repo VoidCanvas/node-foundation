@@ -1,0 +1,23 @@
+{
+	"ui":{
+		"nm":{
+			"rules":["required"],
+			"controlName":"Name"
+		},
+		"bl":{
+			"rules":["required"],
+			"controlName":"Balls"
+		}
+	},
+
+	"api":{
+		"name":{
+			"rules":["required"],
+			"controlName":"Name"
+		},
+		"ball":{
+			"rules":["required"],
+			"controlName":"Balls"
+		}
+	}
+}

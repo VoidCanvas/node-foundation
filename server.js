@@ -16,8 +16,6 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); //this will let us get the data from a POST
 
-//using frontend 
-//app.use(express.static(config.client.baseFolder));
 
 // //initializing session handler
 // var session = localrequire('core.infrastructure.session-manager')
@@ -32,9 +30,9 @@ app.use(bodyParser.urlencoded({ extended: true })); //this will let us get the d
 //var ConfugurationManager = localrequire('core.infrastructure.configuration-manager'),
  //   configurationManager = new ConfugurationManager();
 
-//calling polyfills | TODO: find a proper way to call them
-//var polyfillhandler = localrequire('app-scaffold.polyfillhandler');
-//polyfillhandler.init();
+//calling polyfills 
+var polyfillhandler = localrequire('core.scaffold.polyfill-handler');
+polyfillhandler.init();
 
 
 

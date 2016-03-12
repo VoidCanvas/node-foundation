@@ -1,0 +1,16 @@
+{
+	"properties":{
+		"name": null,
+		"ball": null
+	},
+
+	"uiMap":{
+		"nm": "name",
+		"bl": "ball"
+	},
+
+	"dbMap":{
+		"name": "name",
+		"ball": "ball"		
+	}
+}
