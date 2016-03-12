@@ -77,14 +77,15 @@ app.use(function (req, res, next) {
     });
 //}
 
-
-var port = config.server.port;
-app.set('port', port);
-
 /**
  * Create HTTP server
  */
 var server = http.createServer(app);
+
+var port = process.env.PORT || config.server.port; //some application like heroku provides dynamic port
+
+app.set('port', port);
+
 
 /**
  * listen on provided port
