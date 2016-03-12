@@ -1,27 +1,19 @@
-var router = require('express').Router(),
-	config = localrequire('config.json');
-    Resource = localrequire('core.infrastructure.resource');
+"use strict"
+
+let BaseRoute = localrequire('backend.base.route');
+let pingController = localrequire('backend.controllers.ping');
     
-var PingModel = localrequire('backend.models.ping.model');
-/**
- * This sets basic crud routes
- */
- var ping = new Resource(router);
-
-// test override of GET '/' path
-ping.findAll = function (req, res) {
-	var ping = new PingModel();
-	ping.validate();
-
-    res.end(ping.validationErrors);
-};
+const path = "/ping";
 
 
+class PingRoute extends BaseRoute{
+    constructor(path){
+        super(path);
+    }
 
-exports.init = function (app) {
-    // apply any CORS rules or any authentication/authorizations
-    // middleware here
-    var path = config.server.baseApiPath;
-    path+="/ping";
-    app.use(path, router);
-};
+    findAll(req, res){
+        res.end(JSON.stringify(pingController.getValidationErrors()));
+    }
+}
+
+module.exports = new PingRoute(path);
