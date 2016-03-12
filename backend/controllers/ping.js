@@ -19,6 +19,18 @@ class PingController extends BaseController{
 		this.checkPing();
 		return this.model.validationErrors;
 	}
+
+	create(obj){
+		let uiModel = this.model.createUIModel(obj);
+		uiModel.validate();
+		if(!uiModel.isValid)
+			return uiModel.validationErrors;
+		else{
+			this.model.loadFromUIModel(uiModel);
+			this.model.validate();
+			return this.model.validationErrors;
+		}
+	}
 }
 
 module.exports = PingController;

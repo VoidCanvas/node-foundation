@@ -1,15 +1,4 @@
 {
-	"ui":{
-		"nm":{
-			"rules":["required"],
-			"controlName":"Name"
-		},
-		"bl":{
-			"rules":["required"],
-			"controlName":"Balls"
-		}
-	},
-
 	"api":{
 		"name":{
 			"rules":["required"],
@@ -19,5 +8,16 @@
 			"rules":["required"],
 			"controlName":"Balls"
 		}
+	},
+	"ui":{
+		"nm":{
+			"rules":["required"],
+			"controlName":"Name"
+		},
+		"bl":{
+			"rules":["required"],
+			"controlName":"Balls"
+		}
 	}
+
 }

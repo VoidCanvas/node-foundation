@@ -11,8 +11,8 @@ let propertiesConfig = require('./properties.json');
 class PingModel extends BaseModel{
 
 	//the constructor of the model. 
-	constructor(){
-		super();
+	constructor(obj){
+		super(obj);
 
 		//model specific customizations can be done here
 	}
