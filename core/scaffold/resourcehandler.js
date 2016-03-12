@@ -1,11 +1,13 @@
+"use strict"
 
-var fs = require('fs');
-var _app = null; //to be set on init
-var express = require('express');
-var config = localrequire('config.json');
+let fs = require('fs');
+let _app = null; //to be set on init
+let express = require('express');
+let compression = require('compression');
+let config = localrequire('config.json');
 
-var resourcePath = "backend/routes";
-var actualResourcePath = "./../../backend/routes";
+let resourcePath = "backend/routes";
+let actualResourcePath = "./../../backend/routes";
 
 function setupResource(path) {
 	if(path.indexOf('.js')===path.length-3){
@@ -15,7 +17,7 @@ function setupResource(path) {
 	}
 }
 
-var walkAndInitializeResouce = function (path) {
+let walkAndInitializeResouce = function (path) {
 	var files = fs.readdirSync(path);
 	if (files && files.length){
 		files.forEach(function(file) {
@@ -31,7 +33,19 @@ var walkAndInitializeResouce = function (path) {
 }
 
 
-var resourceHandler = {
+
+function shouldCompress(req, res) {
+	if (req.headers['x-no-compression']) {
+	// don't compress responses with this request header
+	return false
+	}
+
+	// fallback to standard filter function
+	return compression.filter(req, res)
+}
+
+
+let resourceHandler = {
 	init:function (app) {
 		_app = app;
 
@@ -47,6 +61,11 @@ var resourceHandler = {
 			}
 			next();
 		});
+
+		//compression
+		if(config.server && config.server.response && config.server.response.isCompress)
+			app.use(compression())
+
 
 		//walking and initializing other routes
 		walkAndInitializeResouce(resourcePath);
