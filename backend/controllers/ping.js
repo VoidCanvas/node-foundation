@@ -6,19 +6,19 @@ let PingModel = localrequire('backend.models.ping.model');
 class PingController extends BaseController{
 	constructor(){
 		super();
+		this.model = new PingModel();
 
 		//do your stuffs here
-		this.ping = new PingModel();
 	}
 
 	checkPing(){
-		return this.ping.validate();
+		return this.model.validate();
 	}
 
 	getValidationErrors(){
 		this.checkPing();
-		return this.ping.validationErrors;
+		return this.model.validationErrors;
 	}
 }
 
-module.exports = new PingController();
+module.exports = PingController;
