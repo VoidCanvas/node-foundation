@@ -2,7 +2,11 @@
 
 let BaseRoute = localrequire('backend.base.route');
 let pingController = localrequire('backend.controllers.ping');
-    
+
+/**
+ * Providing path is mandatory. 
+ * @type {String}
+ */
 const path = "/ping";
 
 

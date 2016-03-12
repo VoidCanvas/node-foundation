@@ -14,7 +14,7 @@ class BaseRoute {
 			throw new Error("createRoute(path) needs routerpath as argument");
 
 		this.path = path;
-		
+
 		router.get('/', function () {
 	        // this wrapping is required because if provide
 	        // function referene directly here then

@@ -34,7 +34,23 @@ var walkAndInitializeResouce = function (path) {
 var resourceHandler = {
 	init:function (app) {
 		_app = app;
+
+		//setting up headers
+		app.use(function(req, res, next) {
+			if(config.server && config.server.headers){
+				var obj = config.server.headers;
+				for (var i in obj) {
+					if (obj.hasOwnProperty(i)) {
+						res.header(i, obj[i]);
+				  	}
+				}
+			}
+			next();
+		});
+
+		//walking and initializing other routes
 		walkAndInitializeResouce(resourcePath);
+
 		//initialize public folder
 		app.use(express.static(config.client.baseFolder));		
 	}
