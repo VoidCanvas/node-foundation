@@ -15,20 +15,30 @@ class BaseRoute {
 
 		this.path = path;
 
-		router.get('/', function () {
+		router.get('/', function (req, res) {
 	        // this wrapping is required because if provide
 	        // function referene directly here then
 	        // the overrided function would not be
 	        // present at the time of execution
+	        this.controller.request = this.controller.request || {};
+	        this.controller.request.body = req.body;
+	        this.controller.request.params = req.query.extend(req.params);
+	        this.controller.session = req.session;
+	        
 	        this.findAll.apply(this, arguments);
 	    }.bind(this));
 
 	    // map GET /:id
-	    router.get('/:id', function () {
+	    router.get('/:id', function (req, res) {
 	        // this wrapping is required because if provide
 	        // function referene directly here then
 	        // the overrided function would not be
 	        // present at the time of execution
+	        this.controller.request = this.controller.request || {};
+	        this.controller.request.body = req.body;
+	        this.controller.request.params = req.query.extend(req.params);
+	        this.controller.session = req.session;
+
 	        this.findById.apply(this, arguments);
 	    }.bind(this));
 

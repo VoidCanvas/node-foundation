@@ -19,7 +19,11 @@ class PingRoute extends BaseRoute{
     }
 
     findAll(req, res){
-        res.end(JSON.stringify(this.controller.getValidationErrors()));
+        res.end(JSON.stringify(this.controller.findAll()));
+    }
+
+    findById(req, res){
+        res.end(this.controller.findById());
     }
 
     create(req, res){

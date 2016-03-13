@@ -16,10 +16,9 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); //this will let us get the data from a POST
 
-
-// //initializing session handler
-// var session = localrequire('core.infrastructure.session-manager')
-// session.init(app);
+//initializing session handler
+var session = localrequire('core.infrastructure.session-manager');
+session.init(app);
 
 
 

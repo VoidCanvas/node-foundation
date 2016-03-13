@@ -3,7 +3,7 @@
 let BaseController = localrequire('backend.base.controller');
 let PingModel = localrequire('backend.models.ping.model');
 
-class PingController extends BaseController{
+class PingController extends BaseController {
 	constructor(){
 		super();
 		this.model = new PingModel();
@@ -30,6 +30,15 @@ class PingController extends BaseController{
 			this.model.validate();
 			return this.model.validationErrors;
 		}
+	}
+
+	findAll(){
+		return this.sessionManager.get(this.session, "test");
+	}
+
+	findById(){
+		this.sessionManager.set(this.session, {test: this.request.params.id});
+		return this.request.params.id;
 	}
 }
 
