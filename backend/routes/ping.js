@@ -10,10 +10,14 @@ let PingController = localrequire('backend.controllers.ping');
 const path = "/ping";
 
 const routeConfig = {
-    "/objectPrint" : {
+    "/object" : {
         "method": "get",
-        "function": "objectPrint"
-    }
+        "function": "object"
+    },
+    "/objectValidations" : {
+        "method": "get",
+        "function": "objectValidations"
+    },
 }
 
 
@@ -33,9 +37,14 @@ class PingRoute extends BaseRoute{
         return path;
     }
 
-    objectPrint(req, res){
-        res.end("i am objectPrint");
+    object(req, res){
+        res.end(JSON.stringify(this.controller.model));
     }
+    objectValidations(req, res){
+        this.controller.model.validate();
+        res.end(JSON.stringify(this.controller.model.ball.validationErrors));
+    }
+
     findAll(req, res){
         res.end(JSON.stringify(this.controller.findAll()));
     }
