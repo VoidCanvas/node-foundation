@@ -12,11 +12,11 @@
 	"ui":{
 		"nm":{
 			"rules":["required"],
-			"controlName":"Name"
+			"controlName":"nm"
 		},
 		"bl":{
 			"rules":["required"],
-			"controlName":"Balls"
+			"controlName":"bl"
 		}
 	}
 

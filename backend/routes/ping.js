@@ -42,7 +42,7 @@ class PingRoute extends BaseRoute{
     }
     objectValidations(req, res){
         this.controller.model.validate();
-        res.end(JSON.stringify(this.controller.model.ball.validationErrors));
+        res.end(JSON.stringify(this.controller.model.validationErrors));
     }
 
     findAll(req, res){

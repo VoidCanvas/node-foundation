@@ -2,7 +2,7 @@
 	"properties":{
 		"name":  {
 			"type": "String",
-			"value": ""
+			"value": "dudu"
 		},
 		"ball": {
 			"type": "Ball"

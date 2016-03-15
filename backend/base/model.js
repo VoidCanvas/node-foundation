@@ -2,6 +2,30 @@
 
 var ValidationModel = require('imvalid');
 
+
+//helper functions
+function getConstructor(propConfig) {
+	if(propConfig && propConfig.type){
+		let propConstructor = propConfig.type;
+		let propDefaultValue = propConfig.value;
+		//setting up the appropriate constructor
+		if(propConstructor.indexOf('.')!==-1 || typeof global[propConstructor] !== "function")
+			propConstructor = localrequire(`backend.models.${propConstructor}.model`);
+		else
+			propConstructor = global[propConstructor];
+
+		//If you set the value explicitly to null, than it won't create the object. Else the nested object will be created
+		return propConstructor;
+	}
+	else{
+		throw new Error(`property must have a type`);
+	}
+}
+
+
+
+
+
 //base model is extracted from validation model
 class BaseModel extends ValidationModel {
 
@@ -30,26 +54,15 @@ class BaseModel extends ValidationModel {
 			for(let propConfigName in propertyInfos){
 				if(!propertyInfos.hasOwnProperty(propConfigName))
 					continue;
-				
+
 				let propConfig = propertyInfos[propConfigName];
-				if(propConfig && propConfig.type){
-					let propConstructor = propConfig.type;
-					let propDefaultValue = propConfig.value;
-					//setting up the appropriate constructor
-					if(propConstructor.indexOf('.')!==-1 || typeof global[propConstructor] !== "function")
-						propConstructor = localrequire(`backend.models.${propConstructor}.model`);
-					else
-						propConstructor = global[propConstructor];
+				let propConstructor = getConstructor(propConfig);
+				let propDefaultValue = propConfig.value;
+				let givenValue = (obj && obj[propConfigName]) || propDefaultValue;
 
-					let givenValue = (obj && obj[propConfigName]) || propDefaultValue;
-
-					//If you set the value explicitly to null, than it won't create the object. Else the nested object will be created
-					if(givenValue!==null)
+				if(givenValue!==null)
 						this[propConfigName] = new propConstructor(givenValue).valueOf();
-				}
-				else{
-					throw new Error(`property ${propConfigName} must have a type`);
-				}
+
 			}
 		}
 	}
@@ -74,20 +87,22 @@ class BaseModel extends ValidationModel {
 		let properties = this.getProperties();
 		let appProperties = properties.properties;
 		let uiMap = properties.uiMap;
+		for(var propName in (uiMap || appProperties)){
+			if(!obj.hasOwnProperty(propName) || !uiMap.hasOwnProperty(propName) || typeof obj[propName] === "function")
+				continue;
+			
+			let appPropertyName = uiMap ? uiMap[propName] : propName;
+			let uiPropertyValue = obj[propName];
 
-		for(var propName in obj){
-			let propertyName = uiMap ? uiMap[propName] : propName;
+			let propConfig = appProperties[appPropertyName];
+			let propConstructor = getConstructor(propConfig);
 
-			if(obj.hasOwnProperty(propName) && appProperties.hasOwnProperty(propertyName)){
-				let propValue = obj[propName];
-				if(propValue && typeof propValue === "object"){
-
-				}
-				else{
-					this[i] = value;
-				}
+			if(uiPropertyValue!==null){
+				let childAppObj = new propConstructor().valueOf();
+				this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromUIModel(uiPropertyValue) : uiPropertyValue;
 			}
 		}
+		return this;
 	}
 
 	/**
@@ -95,31 +110,27 @@ class BaseModel extends ValidationModel {
 	 * @param  {Object} obj the db model
 	 * @return {Void}     it will load the property values in itself
 	 */
-	loadFromDBModel(obj){
+	importFromDBModel(obj){
 		let properties = this.getProperties();
 		let appProperties = properties.properties;
 		let dbMap = properties.dbMap;
-		let newModel = this;
+		for(var propName in obj){
+			if(!obj.hasOwnProperty(propName) || !dbMap.hasOwnProperty(propName)  || typeof obj[propName] === "function")
+				continue;
 
-		if(!dbMap){
-			for(var i in obj){
-				if(obj.hasOwnProperty(i) && appProperties.hasOwnProperty(i)){
-					let value = obj[i];
-					newModel[i] = value;
-				}
+			let appPropertyName = dbMap ? dbMap[propName] : propName;
+			let dbPropertyValue = obj[propName];
+
+			let propConfig = appProperties[appPropertyName];
+			let propConstructor = getConstructor(propConfig);
+
+			if(dbPropertyValue!==null){
+				let childAppObj = new propConstructor().valueOf();
+				this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromDBModel(uiPropertyValue) : childAppObj;
 			}
 		}
-		else{
-			for(var i in dbMap){
-				if(dbMap.hasOwnProperty(i) && appProperties.hasOwnProperty(dbMap[i])){
-					let value = obj[i] || appProperties[dbMap[i]];
-					newModel[dbMap[i]] = value;
-				}
-			}		
-		}
+		return this;
 	}
-
-
 
 	/**
 	 * This will create a UI model using the given object
@@ -127,27 +138,32 @@ class BaseModel extends ValidationModel {
 	 * @return {Object}     
 	 */
 	createUIModel(obj){
-		let properties = this.getProperties(),
-			validations = this.getValidations(),
-			appProperties = properties.properties,
-			uiMap = properties.uiMap
-
+		let properties = this.getProperties();
+		let appProperties = properties.properties;
+		let uiMap = properties.uiMap;
 		let newModel = new ValidationModel();
+		for(var propName in (uiMap || appProperties)){
+			if(!obj.hasOwnProperty(propName) || !uiMap.hasOwnProperty(propName)  || typeof obj[propName] === "function")
+				continue;
+			
+			let appPropertyName = uiMap ? uiMap[propName] : propName;
+			let uiPropertyValue = obj[propName];
 
-		if(!uiMap){
-			newModel.extend(appProperties);
-			newModel.validations = validations.api;
+			let propConfig = appProperties[appPropertyName];
+			let propConstructor = getConstructor(propConfig);
+
+			if(uiPropertyValue!==null){
+				let childAppObj = new propConstructor().valueOf();
+				newModel[propName] = (typeof childAppObj === "object") ? childAppObj.createUIModel(uiPropertyValue) : uiPropertyValue;
+			}
 		}
-		else{
-			for(var i in uiMap){
-				if(uiMap.hasOwnProperty(i) && obj.hasOwnProperty(i)){
-					let value = obj[i];
-					newModel[i] = value;
-				}
-			}		
-			newModel.validations=validations.ui;
+		let validations = this.getValidations();
+		if(validations){
+			if(validations.ui)
+				newModel.validations = validations.ui.clone();
+			else
+				newModel.validations = validations.api.clone();
 		}
-		
 		return newModel;
 	}
 

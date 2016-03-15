@@ -23,13 +23,15 @@ class PingController extends BaseController {
 	create(obj){
 		let uiModel = this.model.createUIModel(obj);
 		uiModel.validate();
-		if(!uiModel.isValid)
+		if(uiModel.validationErrors.length){
 			return uiModel.validationErrors;
-		else{
-			this.model.loadFromUIModel(uiModel);
-			this.model.validate();
-			return this.model.validationErrors;
 		}
+		else{
+			this.model.importFromUIModel(uiModel);
+			this.model.validate();
+			//return this.model.validationErrors;
+		}
+		return this.model;
 	}
 
 	findAll(){
