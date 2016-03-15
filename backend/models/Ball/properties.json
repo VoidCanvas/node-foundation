@@ -1,0 +1,16 @@
+{
+	"properties":{
+		"size":  {
+			"type": "String",
+			"value": ""
+		}
+	},
+
+	"uiMap":{
+		"sz": "size"
+	},
+
+	"dbMap":{
+		"size": "size"
+	}
+}

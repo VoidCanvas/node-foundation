@@ -1,0 +1,14 @@
+{
+	"api":{
+		"size":{
+			"rules":["required"],
+			"controlName":"size"
+		}
+	},
+	"ui":{
+		"sz":{
+			"rules":["required"],
+			"controlName":"sz"
+		}
+	}
+}

@@ -1,7 +1,12 @@
 {
 	"properties":{
-		"name": null,
-		"ball": null
+		"name":  {
+			"type": "String",
+			"value": ""
+		},
+		"ball": {
+			"type": "Ball"
+		}
 	},
 
 	"uiMap":{

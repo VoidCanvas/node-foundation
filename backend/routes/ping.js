@@ -9,6 +9,13 @@ let PingController = localrequire('backend.controllers.ping');
  */
 const path = "/ping";
 
+const routeConfig = {
+    "/objectPrint" : {
+        "method": "get",
+        "function": "objectPrint"
+    }
+}
+
 
 class PingRoute extends BaseRoute{
     constructor(path){
@@ -18,6 +25,17 @@ class PingRoute extends BaseRoute{
         //do your stuffs here
     }
 
+    getRouteConfig(){
+        return routeConfig;
+    }
+
+    getPath(){
+        return path;
+    }
+
+    objectPrint(req, res){
+        res.end("i am objectPrint");
+    }
     findAll(req, res){
         res.end(JSON.stringify(this.controller.findAll()));
     }
@@ -33,4 +51,4 @@ class PingRoute extends BaseRoute{
     }
 }
 
-module.exports = new PingRoute(path);
+module.exports = new PingRoute();

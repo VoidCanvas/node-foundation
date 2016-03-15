@@ -26,15 +26,29 @@ class BaseModel extends ValidationModel {
 
 		//setting up the properties from property config
 		if(properties && properties.properties){
-			this.extend(properties.properties);
+			let propertyInfos = properties.properties;
+			for(let propConfigName in propertyInfos){
+				if(!propertyInfos.hasOwnProperty(propConfigName))
+					continue;
+				
+				let propConfig = propertyInfos[propConfigName];
+				if(propConfig && propConfig.type){
+					let propConstructor = propConfig.type;
+					let propDefaultValue = propConfig.value;
+					//setting up the appropriate constructor
+					if(propConstructor.indexOf('.')!==-1 || typeof global[propConstructor] !== "function")
+						propConstructor = localrequire(`backend.models.${propConstructor}.model`);
+					else
+						propConstructor = global[propConstructor];
 
-			//overriding with given properties
-			if(obj){
-				for(let i in obj){
-					if(obj.hasOwnProperty(i) && properties.properties.hasOwnProperty(i)){
-						this[i]=obj[i];
-					}
+					let givenValue = (obj && obj[propConfigName]) || propDefaultValue;
 
+					//If you set the value explicitly to null, than it won't create the object. Else the nested object will be created
+					if(givenValue!==null)
+						this[propConfigName] = new propConstructor(givenValue).valueOf();
+				}
+				else{
+					throw new Error(`property ${propConfigName} must have a type`);
 				}
 			}
 		}
@@ -53,31 +67,59 @@ class BaseModel extends ValidationModel {
 
 	/**
 	 * This will load the properties from the given object considering the object as an ui model
-	 * @param  {Object} obj the ui model
+	 * @param  {Object} obj - the ui model
 	 * @return {Void}     it will load the property values in itself
 	 */
-	loadFromUIModel(obj){
+	importFromUIModel(obj){
 		let properties = this.getProperties();
+		let appProperties = properties.properties;
 		let uiMap = properties.uiMap;
+
+		for(var propName in obj){
+			let propertyName = uiMap ? uiMap[propName] : propName;
+
+			if(obj.hasOwnProperty(propName) && appProperties.hasOwnProperty(propertyName)){
+				let propValue = obj[propName];
+				if(propValue && typeof propValue === "object"){
+
+				}
+				else{
+					this[i] = value;
+				}
+			}
+		}
+	}
+
+	/**
+	 * This will load the properties from the given object considering the object as an db object
+	 * @param  {Object} obj the db model
+	 * @return {Void}     it will load the property values in itself
+	 */
+	loadFromDBModel(obj){
+		let properties = this.getProperties();
+		let appProperties = properties.properties;
+		let dbMap = properties.dbMap;
 		let newModel = this;
 
-		if(!uiMap){
+		if(!dbMap){
 			for(var i in obj){
-				if(obj.hasOwnProperty(i)){
+				if(obj.hasOwnProperty(i) && appProperties.hasOwnProperty(i)){
 					let value = obj[i];
-					newModel[uiMap[i]] = value;
+					newModel[i] = value;
 				}
 			}
 		}
 		else{
-			for(var i in uiMap){
-				if(uiMap.hasOwnProperty(i)){
-					let value = obj[i] || appProperties[uiMap[i]];
-					newModel[uiMap[i]] = value;
+			for(var i in dbMap){
+				if(dbMap.hasOwnProperty(i) && appProperties.hasOwnProperty(dbMap[i])){
+					let value = obj[i] || appProperties[dbMap[i]];
+					newModel[dbMap[i]] = value;
 				}
 			}		
 		}
 	}
+
+
 
 	/**
 	 * This will create a UI model using the given object
@@ -107,6 +149,14 @@ class BaseModel extends ValidationModel {
 		}
 		
 		return newModel;
+	}
+
+	/**
+	 * this will export the model in UI model
+	 * @return {Object} return a UI model without any validation details etc
+	 */
+	exportToUIModel(){
+
 	}
 
 }
