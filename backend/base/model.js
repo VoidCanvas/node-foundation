@@ -61,7 +61,7 @@ class BaseModel extends ValidationModel {
 				let givenValue = (obj && obj[propConfigName]) || propDefaultValue;
 
 				if(givenValue!==null)
-						this[propConfigName] = new propConstructor(givenValue).valueOf();
+						this[propConfigName] = (givenValue || givenValue===0) ? new propConstructor(givenValue).valueOf() : new propConstructor().valueOf();
 
 			}
 		}

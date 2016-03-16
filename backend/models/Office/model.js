@@ -8,7 +8,7 @@ let BaseModel = localrequire('backend.base.model');
 let validationConfig = require('./validations.json');
 let propertiesConfig = require('./properties.json');
 
-class BallModel extends BaseModel{
+class OfficeModel extends BaseModel{
 
 	//the constructor of the model. 
 	constructor(obj){
@@ -26,4 +26,4 @@ class BallModel extends BaseModel{
 	} 
 }
 
-module.exports = BallModel;
+module.exports = OfficeModel;

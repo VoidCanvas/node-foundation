@@ -4,19 +4,19 @@
 			"rules":["required"],
 			"controlName":"Name"
 		},
-		"ball":{
+		"worksFor":{
 			"rules":["required"],
-			"controlName":"Balls"
+			"controlName":"worksFor"
 		}
 	},
 	"ui":{
-		"nm":{
+		"fullName":{
 			"rules":["required"],
-			"controlName":"nm"
+			"controlName":"fullName"
 		},
-		"bl":{
+		"companyDetails":{
 			"rules":["required"],
-			"controlName":"bl"
+			"controlName":"companyDetails"
 		}
 	}
 

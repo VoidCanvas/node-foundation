@@ -95,6 +95,7 @@ class BaseRoute {
 		 * if controller is defined in the constructor of the route, initialize various things there
 		 * @param  {Controller} this.controller is the controller of this particular route
 		 */
+		this.controller = this.createController();
         if(this.controller){
 	        this.controller.request = this.controller.request || {};
 	        this.controller.request.body = req.body;

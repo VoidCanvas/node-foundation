@@ -28,9 +28,13 @@ const routeConfig = {
 class EmployeeRoute extends BaseRoute{
     constructor(path){
         super(path);
-        this.controller = new EmployeeController();
-
+        
         //do your stuffs here
+    }
+
+    //A must have function
+    createController(){
+        return new EmployeeController();
     }
 
     //A must have function

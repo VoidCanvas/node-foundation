@@ -1,21 +1,26 @@
 {
 	"properties":{
+		"id":{
+			"type": "String"
+		},
 		"name":  {
 			"type": "String",
 			"value": "dudu"
 		},
-		"ball": {
-			"type": "Ball"
+		"worksFor": {
+			"type": "Office"
 		}
 	},
 
 	"uiMap":{
-		"nm": "name",
-		"bl": "ball"
+		"id": "id",
+		"fullName": "name",
+		"companyDetails": "worksFor"
 	},
 
 	"dbMap":{
+		"id": "id",
 		"name": "name",
-		"ball": "ball"		
+		"company": "worksFor"
 	}
 }
