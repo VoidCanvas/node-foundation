@@ -38,7 +38,7 @@ class PingRoute extends BaseRoute{
     }
 
     object(req, res){
-        res.end(JSON.stringify(this.controller.model));
+        res.end(JSON.stringify(this.controller.model.exportToDBModel()));
     }
     objectValidations(req, res){
         this.controller.model.validate();

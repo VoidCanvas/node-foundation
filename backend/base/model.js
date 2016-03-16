@@ -87,8 +87,10 @@ class BaseModel extends ValidationModel {
 		let properties = this.getProperties();
 		let appProperties = properties.properties;
 		let uiMap = properties.uiMap;
-		for(var propName in (uiMap || appProperties)){
-			if(!obj.hasOwnProperty(propName) || !uiMap.hasOwnProperty(propName) || typeof obj[propName] === "function")
+
+		let iterableObj = (uiMap || appProperties);
+		for(var propName in iterableObj){
+			if(!obj.hasOwnProperty(propName) || !iterableObj.hasOwnProperty(propName) || typeof obj[propName] === "function")
 				continue;
 			
 			let appPropertyName = uiMap ? uiMap[propName] : propName;
@@ -114,8 +116,10 @@ class BaseModel extends ValidationModel {
 		let properties = this.getProperties();
 		let appProperties = properties.properties;
 		let dbMap = properties.dbMap;
-		for(var propName in obj){
-			if(!obj.hasOwnProperty(propName) || !dbMap.hasOwnProperty(propName)  || typeof obj[propName] === "function")
+
+		let iterableObj = (dbMap || appProperties);
+		for(var propName in iterableObj){
+			if(!obj.hasOwnProperty(propName) || !iterableObj.hasOwnProperty(propName)  || typeof obj[propName] === "function")
 				continue;
 
 			let appPropertyName = dbMap ? dbMap[propName] : propName;
@@ -133,7 +137,7 @@ class BaseModel extends ValidationModel {
 	}
 
 	/**
-	 * This will create a UI model using the given object
+	 * This will create a UI model using the given object, which is probably the body received from the client request
 	 * @param  {Object} obj 
 	 * @return {Object}     
 	 */
@@ -142,8 +146,10 @@ class BaseModel extends ValidationModel {
 		let appProperties = properties.properties;
 		let uiMap = properties.uiMap;
 		let newModel = new ValidationModel();
-		for(var propName in (uiMap || appProperties)){
-			if(!obj.hasOwnProperty(propName) || !uiMap.hasOwnProperty(propName)  || typeof obj[propName] === "function")
+
+		let iterableObj = (uiMap || appProperties);
+		for(var propName in iterableObj){
+			if(!obj.hasOwnProperty(propName) || !iterableObj.hasOwnProperty(propName)  || typeof obj[propName] === "function")
 				continue;
 			
 			let appPropertyName = uiMap ? uiMap[propName] : propName;
@@ -172,7 +178,56 @@ class BaseModel extends ValidationModel {
 	 * @return {Object} return a UI model without any validation details etc
 	 */
 	exportToUIModel(){
+		let uiModel = {};
+		let properties = this.getProperties();
+		let appProperties = properties.properties;
+		let uiMap = properties.uiMap;
 
+		let iterableObj = (uiMap || appProperties);
+		for(let prop in iterableObj){
+			if(!iterableObj.hasOwnProperty(prop)  || typeof iterableObj[prop] === "function")
+				continue;
+		
+			let uiPropName = prop;
+			let appPropName = uiMap ? uiMap[prop] : prop;
+			let value = this[appPropName];
+
+			if(value && typeof value === "object"){
+				value = value.exportToUIModel();
+			}
+
+			uiModel[uiPropName] = value;
+		}
+		return uiModel;
+	}
+
+
+	/**
+	 * this will export the model in DB model
+	 * @return {Object} return a DB model without any validation details etc
+	 */
+	exportToDBModel(){
+		let dbModel = {};
+		let properties = this.getProperties();
+		let appProperties = properties.properties;
+		let dbMap = properties.dbMap;
+
+		let iterableObj = (dbMap || appProperties);
+		for(let prop in iterableObj){
+			if(!iterableObj.hasOwnProperty(prop)  || typeof iterableObj[prop] === "function")
+				continue;
+		
+			let uiPropName = prop;
+			let appPropName = dbMap ? dbMap[prop] : prop;
+			let value = this[appPropName];
+
+			if(value && typeof value === "object"){
+				value = value.exportToDBModel();
+			}
+
+			dbModel[uiPropName] = value;
+		}
+		return dbModel;
 	}
 
 }
