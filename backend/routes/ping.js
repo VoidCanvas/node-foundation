@@ -2,7 +2,7 @@
 
 let BaseRoute = localrequire('backend.base.route');
 let PingController = localrequire('backend.controllers.ping');
-
+let dbClient = localrequire('dbClient');
 /**
  * Providing path is mandatory. 
  * @type {String}
@@ -18,6 +18,10 @@ const routeConfig = {
         "method": "get",
         "function": "objectValidations"
     },
+    "/dbCheck" : {
+        "method": "get",
+        "function": "dbCheck"
+    }
 }
 
 
@@ -29,12 +33,19 @@ class PingRoute extends BaseRoute{
         //do your stuffs here
     }
 
+    //A must have function
     getRouteConfig(){
         return routeConfig;
     }
 
+    //A must have function
     getPath(){
         return path;
+    }
+
+
+    dbCheck(req, res){
+        res.end(dbClient.sayHi());
     }
 
     object(req, res){
@@ -45,19 +56,27 @@ class PingRoute extends BaseRoute{
         res.end(JSON.stringify(this.controller.model.validationErrors));
     }
 
+    create(req, res){
+    	var body = req.body;
+    	this.controller.create(body).then(function (response) {
+    	   res.end(JSON.stringify(response));
+        });
+    }
+
     findAll(req, res){
         res.end(JSON.stringify(this.controller.findAll()));
     }
 
     findById(req, res){
-        res.end(this.controller.findById());
+        res.end(JSON.stringify(this.controller.findById()));
     }
 
-    create(req, res){
-    	var body = req.body;
-    	var response = this.controller.create(body);
-    	res.end(JSON.stringify(response));
+    deleteById(req, res){
+        this.controller.deleteById().then(function (response) {
+           res.end(JSON.stringify(response));
+        })
     }
+
 }
 
 module.exports = new PingRoute();

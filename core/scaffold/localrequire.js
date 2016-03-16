@@ -1,14 +1,15 @@
+"use strict"
 
-var basePath = __dirname+"/../..";
+let basePath = __dirname+"/../..";
+let config = require('../../config.json');
+let paths = config && config.localrequire && config.localrequire.customPaths;
 
-var paths = require('../../config.json').localRequire;
-
-var localRequireHandler = {
+let localRequireHandler = {
 	require:function (modalias) {
 	    // read modalias sice its mapping would be done
 	    var fullModAlias = modalias;
 	    if(paths[fullModAlias])
-	    	return require(paths[fullModAlias]);
+	    	return this.require(paths[fullModAlias]);
 	    else{
 	    	var extension = null;
 	    	if(modalias.indexOf(".json")===modalias.length-5){
@@ -35,7 +36,7 @@ var localRequireHandler = {
 		 * expose localrequire on global so that all
 		 * files can use it.
 		 */
-		global.localrequire = this.require;
+		global.localrequire = this.require.bind(this);
 
 
 	}

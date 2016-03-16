@@ -13,14 +13,12 @@
 	"client":{
 		"baseFolder": "./frontend"
 	},
-	"localRequire":{
-		"paths":{
-
-		}
+	"database":{
+		"client": "database.file-client"
 	},
-	"errors":{
-		"404": {
-			"path": "404.html"
+	"localrequire":{
+		"customPaths":{
+			"dbClient": "core.infrastructure.db-manager"
 		}
 	}
 }
