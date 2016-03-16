@@ -1,13 +1,13 @@
 "use strict"
 
 let BaseRoute = localrequire('backend.base.route');
-let PingController = localrequire('backend.controllers.ping');
+let EmployeeController = localrequire('backend.controllers.employee');
 let dbClient = localrequire('dbClient');
 /**
  * Providing path is mandatory. 
  * @type {String}
  */
-const path = "/ping";
+const path = "/employee";
 
 const routeConfig = {
     "/object" : {
@@ -25,10 +25,10 @@ const routeConfig = {
 }
 
 
-class PingRoute extends BaseRoute{
+class EmployeeRoute extends BaseRoute{
     constructor(path){
         super(path);
-        this.controller = new PingController();
+        this.controller = new EmployeeController();
 
         //do your stuffs here
     }
@@ -79,4 +79,4 @@ class PingRoute extends BaseRoute{
 
 }
 
-module.exports = new PingRoute();
+module.exports = new EmployeeRoute();

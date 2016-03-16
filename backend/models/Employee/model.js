@@ -1,5 +1,5 @@
 /**
- * This is model `Ping`
+ * This is model `Employee`
  */
 "use strict"
 
@@ -8,7 +8,7 @@ let BaseModel = localrequire('backend.base.model');
 let validationConfig = require('./validations.json');
 let propertiesConfig = require('./properties.json');
 
-class PingModel extends BaseModel{
+class EmployeeModel extends BaseModel{
 
 	//the constructor of the model. 
 	constructor(obj){
@@ -26,4 +26,4 @@ class PingModel extends BaseModel{
 	} 
 }
 
-module.exports = PingModel;
+module.exports = EmployeeModel;

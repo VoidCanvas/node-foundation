@@ -1,23 +1,14 @@
 "use strict"
 
 let BaseController = localrequire('backend.base.controller');
-let PingModel = localrequire('backend.models.ping.model');
+let EmployeeModel = localrequire('backend.models.Employee.model');
 
-class PingController extends BaseController {
+class EmployeeController extends BaseController {
 	constructor(){
 		super();
-		this.model = new PingModel();
+		this.model = new EmployeeModel();
 
 		//do your stuffs here
-	}
-
-	checkPing(){
-		return this.model.validate();
-	}
-
-	getValidationErrors(){
-		this.checkPing();
-		return this.model.validationErrors;
 	}
 
 	create(obj){
@@ -56,4 +47,4 @@ class PingController extends BaseController {
 	}
 }
 
-module.exports = PingController;
+module.exports = EmployeeController;
