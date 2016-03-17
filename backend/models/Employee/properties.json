@@ -9,18 +9,24 @@
 		},
 		"worksFor": {
 			"type": "Office"
+		},
+		"previousEmployers":{
+			"type": "Office",
+			"isArray": true
 		}
 	},
 
 	"uiMap":{
 		"id": "id",
 		"fullName": "name",
-		"companyDetails": "worksFor"
+		"companyDetails": "worksFor",
+		"previousEmployers": "previousEmployers"
 	},
 
 	"dbMap":{
 		"id": "id",
 		"name": "name",
-		"company": "worksFor"
+		"company": "worksFor",
+		"previousEmployers":"previousEmployers"
 	}
 }

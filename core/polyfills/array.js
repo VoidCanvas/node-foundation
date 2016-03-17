@@ -1,25 +1,19 @@
-
-// //to convert an array of objects to an array of certain type of objects
-// Array.prototype.buildObjectArray = function (ElementClass) {
-// 	var normalArray = this;
-// 	var arr = [];
-// 	if(normalArray && normalArray.length){
-// 		normalArray.forEach(function (element) {
-// 			arr.push(new ElementClass(element));
-// 		});
-// 	}
-// 	return arr;
-// };
+"use strict"
 
 
-// //to convert an array to upper type models
-// Array.prototype.toUpperModel = function () {
-// 	var objectArray = this;
-// 	var arr = [];
-// 	if(objectArray && objectArray.length){
-// 		objectArray.forEach(function (object) {
-// 			arr.push(object.toUpperModel());
-// 		});
-// 	}
-// 	return arr;
-// };
+Array.prototype.exportToDBModel = function () {
+	let dbModelArray = [];
+	this.forEach(function (model) {
+		dbModelArray.push(model.exportToDBModel());
+	});
+	return dbModelArray;
+}
+
+Array.prototype.exportToUIModel = function () {
+	let uiModelArray = [];
+	this.forEach(function (model) {
+		uiModelArray.push(model.exportToUIModel());
+	});
+	return uiModelArray;
+}
+

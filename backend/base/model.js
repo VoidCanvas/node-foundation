@@ -60,8 +60,19 @@ class BaseModel extends ValidationModel {
 				let propDefaultValue = propConfig.value;
 				let givenValue = (obj && obj[propConfigName]) || propDefaultValue;
 
-				if(givenValue!==null)
+				if(givenValue!==null){
+					if(!propConfig.isArray)
 						this[propConfigName] = (givenValue || givenValue===0) ? new propConstructor(givenValue).valueOf() : new propConstructor().valueOf();
+					else{
+						let arr = [];
+						if(Array.isArray(givenValue)){
+							givenValue.forEach(function (value) {
+								arr.push((value || value===0) ? new propConstructor(value).valueOf() : new propConstructor().valueOf());
+							})
+						}
+						this[propConfigName]=arr;
+					}
+				}
 
 			}
 		}
@@ -100,8 +111,20 @@ class BaseModel extends ValidationModel {
 			let propConstructor = getConstructor(propConfig);
 
 			if(uiPropertyValue!==null){
-				let childAppObj = new propConstructor().valueOf();
-				this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromUIModel(uiPropertyValue) : uiPropertyValue;
+				if(!propConfig.isArray){
+					let childAppObj = new propConstructor().valueOf();
+					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromUIModel(uiPropertyValue) : uiPropertyValue;
+				}
+				else{
+					let arr = [];
+					if(Array.isArray(uiPropertyValue)){
+						uiPropertyValue.forEach(function (value) {
+							let childAppObj = new propConstructor().valueOf();
+							arr.push((typeof childAppObj === "object") ? childAppObj.importFromUIModel(value) : value);
+						})
+					}
+					this[appPropertyName]=arr;
+				}
 			}
 		}
 		return this;
@@ -129,8 +152,20 @@ class BaseModel extends ValidationModel {
 			let propConstructor = getConstructor(propConfig);
 
 			if(dbPropertyValue!==null){
-				let childAppObj = new propConstructor().valueOf();
-				this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromDBModel(uiPropertyValue) : childAppObj;
+				if(!propConfig.isArray){
+					let childAppObj = new propConstructor().valueOf();
+					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromDBModel(uiPropertyValue) : childAppObj;
+				}
+				else{
+					let arr = [];
+					if(Array.isArray(dbPropertyValue)){
+						dbPropertyValue.forEach(function (value) {
+							let childAppObj = new propConstructor().valueOf();
+							arr.push((typeof childAppObj === "object") ? childAppObj.importFromUIModel(value) : value);
+						})
+					}
+					this[appPropertyName]=arr;
+				}
 			}
 		}
 		return this;
@@ -159,8 +194,20 @@ class BaseModel extends ValidationModel {
 			let propConstructor = getConstructor(propConfig);
 
 			if(uiPropertyValue!==null){
-				let childAppObj = new propConstructor().valueOf();
-				newModel[propName] = (typeof childAppObj === "object") ? childAppObj.createUIModel(uiPropertyValue) : uiPropertyValue;
+				if(!propConfig.isArray){
+					let childAppObj = new propConstructor().valueOf();
+					newModel[propName] = (typeof childAppObj === "object") ? childAppObj.createUIModel(uiPropertyValue) : uiPropertyValue;
+				}
+				else{
+					let arr = [];
+					if(Array.isArray(uiPropertyValue)){
+						uiPropertyValue.forEach(function (value) {
+							let childAppObj = new propConstructor().valueOf();
+							arr.push((typeof childAppObj === "object") ? childAppObj.createUIModel(value) : value);
+						})
+					}
+					newModel[propName]=arr;
+				}
 			}
 		}
 		let validations = this.getValidations();
