@@ -21,7 +21,6 @@ var session = localrequire('core.infrastructure.session-manager');
 session.init(app);
 
 
-
 //require environment
 //localrequire('core.scaffold.environment');
 
@@ -34,47 +33,14 @@ var polyfillhandler = localrequire('core.scaffold.polyfill-handler');
 polyfillhandler.init();
 
 
-
-
-
 //initializing resources 
 var resourcehandler = localrequire('core.scaffold.resourcehandler');
 resourcehandler.init(app);
 
+//initiating error handler
+var errorHandler = localrequire('core.scaffold.error-handler');
+errorHandler.init(app);
 
-// error handlers
-/**
- * handle 404 error and forward to error
- * handler
- */
-app.use(function (req, res, next) {
-    var err = new Error('Not found');
-    err.status = 404;
-    next(err);
-});
-
-//if(!configurationManager.getPrivate('isDevelopmentMode')){
-    //will print stack trace
-    //if(app.get('env') === 'development') {
-        app.use(function (err, req, res, next) {
-            res.status(err.status || 500);
-            res.json({
-                message: err.message,
-                error: err
-            });
-        });
-    //}
-
-    // production error handler
-    // no stacktraces leaked
-    app.use(function (err, req, res, next) {
-        res.status(err.status || 500);
-        res.json({
-            message: err.message,
-            error: {}
-        });
-    });
-//}
 
 /**
  * Create HTTP server
