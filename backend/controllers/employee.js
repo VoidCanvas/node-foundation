@@ -1,6 +1,6 @@
 "use strict"
 
-let BaseController = localrequire('backend.base.controller');
+let BaseController = localrequire('baseController');
 let EmployeeModel = localrequire('backend.models.Employee.model');
 
 

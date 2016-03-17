@@ -1,8 +1,8 @@
 "use strict"
 
 let basePath = __dirname+"/../..";
-let config = require('../../config.json');
-let paths = config && config.localrequire && config.localrequire.customPaths;
+let paths = require('./localrequire-custom-paths.json');
+
 
 let localRequireHandler = {
 	require:function (modalias) {

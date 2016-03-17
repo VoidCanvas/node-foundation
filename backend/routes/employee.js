@@ -1,6 +1,6 @@
 "use strict"
 
-let BaseRoute = localrequire('backend.base.route');
+let BaseRoute = localrequire('baseRoute');
 let EmployeeController = localrequire('backend.controllers.employee');
 let dbClient = localrequire('dbClient');
 /**

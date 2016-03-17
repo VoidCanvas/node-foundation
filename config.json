@@ -15,10 +15,5 @@
 	},
 	"database":{
 		"client": "database.file-client"
-	},
-	"localrequire":{
-		"customPaths":{
-			"dbClient": "core.infrastructure.db-manager"
-		}
 	}
 }

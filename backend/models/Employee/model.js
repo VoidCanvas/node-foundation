@@ -4,7 +4,7 @@
 "use strict"
 
 
-let BaseModel = localrequire('backend.base.model');
+let BaseModel = localrequire('baseModel');
 let validationConfig = require('./validations.json');
 let propertiesConfig = require('./properties.json');
 
