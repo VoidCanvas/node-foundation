@@ -25,7 +25,7 @@ class @routeName@ extends BaseRoute{
         //do your stuffs here
     }
 
-    @createController@
+    @controllerInitializationArea@
 
     //A must have function
     getRouteConfig(){
