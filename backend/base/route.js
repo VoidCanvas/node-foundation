@@ -1,8 +1,7 @@
 "use strict"
 
-let router = require('express').Router(),
-	config = localrequire('config.json');
-
+let	config = localrequire('config.json');
+let BaseController = localrequire('baseController');
 /**
  * Error to be throw in case not implemented
  */
@@ -10,12 +9,19 @@ let err = new Error('Not implemented');
 
 
 class BaseRoute {
+	createController(){
+		return new BaseController();
+	}
+	
 	constructor(){
 		let path = this.getPath();
 		if(!path)
 			throw new Error("createRoute(path) needs routerpath as argument");
 
 		this.path = path;
+		
+		//creating router object
+		let router = this._router = require('express').Router();
 
 		//setting up custom routes
 	    let routeConfig = this.getRouteConfig();
@@ -107,7 +113,7 @@ class BaseRoute {
 	init(app){
 		let path = config.server.baseApiPath;
 	    path+=this.path;
-	    app.use(path, router);
+	    app.use(path, this._router);
 	}
 
 
