@@ -1,6 +1,6 @@
 "use strict"
 
-let config = localrequire('config.json');
+let config = localrequire('configManager');
 let dbClient = localrequire(config.database.client);
 
 

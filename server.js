@@ -2,12 +2,18 @@
 
 var http = require('http');
 var express = require('express');
-var config = require('./config.json');
 var bodyParser = require('body-parser');
 
 //initializing local modules
 var localrequirehandler = require('./core/scaffold/localrequire');
 localrequirehandler.init(); //after this function ran, you will be able to use localrequire
+
+//calling polyfills 
+var polyfillhandler = localrequire('core.scaffold.polyfill-handler');
+polyfillhandler.init();
+
+var config = localrequire('configManager');
+config.init();
 
 //creating express app
 var app = express();
@@ -19,19 +25,6 @@ app.use(bodyParser.urlencoded({ extended: true })); //this will let us get the d
 //initializing session handler
 var session = localrequire('core.infrastructure.session-manager');
 session.init(app);
-
-
-//require environment
-//localrequire('core.scaffold.environment');
-
-//require config manager
-//var ConfugurationManager = localrequire('core.infrastructure.configuration-manager'),
- //   configurationManager = new ConfugurationManager();
-
-//calling polyfills 
-var polyfillhandler = localrequire('core.scaffold.polyfill-handler');
-polyfillhandler.init();
-
 
 //initializing resources 
 var resourcehandler = localrequire('core.scaffold.resourcehandler');

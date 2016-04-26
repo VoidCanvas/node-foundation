@@ -4,7 +4,7 @@ let fs = require('fs');
 let _app = null; //to be set on init
 let express = require('express');
 let compression = require('compression');
-let config = localrequire('config.json');
+let config = localrequire('configManager');
 
 let resourcePath = "backend/routes";
 let actualResourcePath = "./../../backend/routes";

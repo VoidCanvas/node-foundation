@@ -1,7 +1,7 @@
 "use strict"
 
 let Session = require('express-session');
-let config = localrequire('config.json');
+let config = localrequire('configManager');
 
 class SessionManager {
 

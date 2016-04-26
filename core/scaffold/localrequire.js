@@ -1,7 +1,7 @@
 "use strict"
 
 let basePath = __dirname+"/../..";
-let paths = require('./localrequire-custom-paths.json');
+let paths = require('../../configs/localrequire-custom-paths.json');
 
 
 let localRequireHandler = {

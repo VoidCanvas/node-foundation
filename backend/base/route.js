@@ -1,6 +1,6 @@
 "use strict"
 
-let	config = localrequire('config.json');
+let config = localrequire('configManager');
 let BaseController = localrequire('baseController');
 /**
  * Error to be throw in case not implemented
