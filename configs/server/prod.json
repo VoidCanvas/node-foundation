@@ -1,6 +1,6 @@
 {
 	"server": {
-		"port": 1729,
+		"port": 1730,
 		"baseApiPath": "/api",
 		"headers":{
 			"Access-Control-Allow-Origin": "*",

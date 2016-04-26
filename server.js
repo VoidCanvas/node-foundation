@@ -3,6 +3,7 @@
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
+var argv = require('yargs').argv;
 
 //initializing local modules
 var localrequirehandler = require('./core/scaffold/localrequire');
@@ -12,8 +13,9 @@ localrequirehandler.init(); //after this function ran, you will be able to use l
 var polyfillhandler = localrequire('core.scaffold.polyfill-handler');
 polyfillhandler.init();
 
+//initializing config manager
 var config = localrequire('configManager');
-config.init();
+config.init(argv.env);
 
 //creating express app
 var app = express();
