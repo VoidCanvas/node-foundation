@@ -1,6 +1,6 @@
 {
 	"properties":{
-		"id":{
+		"_id":{
 			"type": "String"
 		},
 		"name":  {
@@ -17,14 +17,13 @@
 	},
 
 	"uiMap":{
-		"id": "id",
 		"fullName": "name",
 		"companyDetails": "worksFor",
 		"previousEmployers": "previousEmployers"
 	},
 
 	"dbMap":{
-		"id": "id",
+		"_id": "_id",
 		"name": "name",
 		"company": "worksFor",
 		"previousEmployers":"previousEmployers"

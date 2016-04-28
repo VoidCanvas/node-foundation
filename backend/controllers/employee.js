@@ -2,7 +2,7 @@
 
 let BaseController = localrequire('baseController');
 let EmployeeModel = localrequire('backend.models.Employee.model');
-
+let collectionName = "employee";
 
 function createUniqueId() {
 	let timestamp = "";
@@ -35,13 +35,11 @@ class EmployeeController extends BaseController {
 		return new Promise(function (resolve, reject) {
 			if(uiModel.isValid){
 				this.model.importFromUIModel(uiModel); //if ui model is valid, update the app model
-				if(!this.model.id)
-					this.model.id = createUniqueId();
 
 				let dbObject = this.model.exportToDBModel(); // will return the db object for that particular model
 
 				this.dbClient.save(dbObject).then(function (obj) {
-					resolve({"id": obj.id}); //if saved successfully, return the saved object
+					resolve({"id": obj._id}); //if saved successfully, return the saved object
 				}, function () {
 					resolve("error occured while saving!!"); //in case of error
 				});				
@@ -60,17 +58,25 @@ class EmployeeController extends BaseController {
 	}
 
 	findAll(){
-		return this.dbClient.findAll();
+		return new Promise((resolve, reject) => {
+			this.dbClient.findAll().then((data) => {
+				resolve(data);
+			})
+		});
 	}
 
 	findById(){
 		let id = this.request.params.id;
-		return this.dbClient.findById(id, "id");
+		return new Promise((resolve, reject) => {
+			this.dbClient.findById(id, "_id").then((data) => {
+				resolve(data);
+			})
+		});
 	}
 
 	deleteById(){
 		let id = this.request.params.id;
-		return this.dbClient.deleteById(id, "id");
+		return this.dbClient.deleteById(id, "_id");
 	}
 }
 

@@ -68,11 +68,15 @@ class EmployeeRoute extends BaseRoute{
     }
 
     findAll(req, res){
-        res.end(JSON.stringify(this.controller.findAll()));
+        this.controller.findAll().then(function (response) {
+           res.end(JSON.stringify(response));
+        });
     }
 
     findById(req, res){
-        res.end(JSON.stringify(this.controller.findById()));
+        this.controller.findById().then(function (response) {
+           res.end(JSON.stringify(response));
+        });
     }
 
     deleteById(req, res){
