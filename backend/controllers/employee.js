@@ -4,22 +4,6 @@ let BaseController = localrequire('baseController');
 let EmployeeModel = localrequire('backend.models.Employee.model');
 let collectionName = "employee";
 
-function createUniqueId() {
-	let timestamp = "";
-	let now = new Date();
-
-	timestamp += now.getFullYear().toString(); // 2011
-	timestamp += now.getMonth();
-	timestamp += now.getDate();
-	timestamp += now.getHours();
-	timestamp += now.getMinutes();
-	timestamp += now.getSeconds();
-	timestamp += now.getMilliseconds();
-
-	return timestamp;
-}
-
-
 class EmployeeController extends BaseController {
 	constructor(){
 		super();
@@ -39,7 +23,7 @@ class EmployeeController extends BaseController {
 				let dbObject = this.model.exportToDBModel(); // will return the db object for that particular model
 
 				this.dbClient.save(dbObject).then(function (obj) {
-					resolve({"id": obj._id}); //if saved successfully, return the saved object
+					resolve({"id": obj._id}); //if saved successfully, return the saved object id
 				}, function () {
 					resolve("error occured while saving!!"); //in case of error
 				});				

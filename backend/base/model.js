@@ -22,10 +22,6 @@ function getConstructor(propConfig) {
 	}
 }
 
-
-
-
-
 //base model is extracted from validation model
 class BaseModel extends ValidationModel {
 
@@ -247,7 +243,6 @@ class BaseModel extends ValidationModel {
 		}
 		return uiModel;
 	}
-
 
 	/**
 	 * this will export the model in DB model

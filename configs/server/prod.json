@@ -1,6 +1,6 @@
 {
 	"server": {
-		"port": 1730,
+		"port": 1729,
 		"baseApiPath": "/api",
 		"headers":{
 			"Access-Control-Allow-Origin": "*",
@@ -14,6 +14,7 @@
 		"baseFolder": "./frontend"
 	},
 	"database":{
-		"client": "database.file-client"
+		"client": "database.file-client",
+		"source": "mongodb://username:password@mydb.dbserver.com:12345/db-name"
 	}
 }

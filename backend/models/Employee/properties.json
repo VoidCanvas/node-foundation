@@ -17,6 +17,7 @@
 	},
 
 	"uiMap":{
+		"_id": "_id",
 		"fullName": "name",
 		"companyDetails": "worksFor",
 		"previousEmployers": "previousEmployers"
