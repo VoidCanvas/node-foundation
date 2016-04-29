@@ -15,6 +15,6 @@
 	},
 	"database":{
 		"client": "database.mongo-client",
-		"source": "mongodb://paultav:zaq1ZAQ!@ds021681.mlab.com:21681/node-foundation"
+		"source": "mongodb://username:password@mydb.dbserver.com:12345/db-name"
 	}
 }

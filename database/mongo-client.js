@@ -82,8 +82,13 @@ class MongoClient {
 				        	reject(err)
 				      	} else {
 				      		let requiredObj = result[0];
-				      		requiredObj._id = requiredObj._id.toString();
-			    	    	resolve(requiredObj);
+				      		if(requiredObj){
+				      			requiredObj._id = requiredObj._id.toString();
+			    	    		resolve(requiredObj);
+				      		}
+				      		else{
+				      			reject();
+				      		}
 			      		}
 				    });
 			  	}

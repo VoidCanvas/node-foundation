@@ -35,7 +35,7 @@ class EmployeeController extends BaseController {
 					if(uiModel.companyDetails.validationErrors.length)
 						resolve(uiModel.companyDetails.validationErrors);
 					else
-						resolve("Validation failed!!");
+						resolve("validation failed!!");
 				}
 			}
 		});
@@ -46,6 +46,8 @@ class EmployeeController extends BaseController {
 			this.dbClient.findAll().then((data) => {
 				let employees = data.createDBModel(EmployeeModel);
 				resolve(employees.exportToUIModel());
+			}, ()=>{
+				resolve("no records");
 			});
 		});
 	}
@@ -56,6 +58,8 @@ class EmployeeController extends BaseController {
 			this.dbClient.findById(id, "_id").then((data) => {
 				let employee = this.model.importFromDBModel(data);
 				resolve(employee.exportToUIModel());
+			}, () => {
+				resolve("not found");
 			});
 		});
 	}
@@ -65,6 +69,8 @@ class EmployeeController extends BaseController {
 		return new Promise((resolve, reject) => {
 			this.dbClient.deleteById(id, "_id").then(()=>{
 				resolve("deleted");
+			}, ()=> {
+				resolve("some error occured")
 			})
 		});
 	}
