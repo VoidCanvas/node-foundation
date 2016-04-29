@@ -17,7 +17,7 @@
 	},
 
 	"uiMap":{
-		"_id": "_id",
+		"hellYeahId": "_id",
 		"fullName": "name",
 		"companyDetails": "worksFor",
 		"previousEmployers": "previousEmployers"

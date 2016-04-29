@@ -47,6 +47,10 @@ class MongoClient {
 				        	console.log(err);
 				        	reject(err)
 				      	} else {
+				      		result.map((obj)=>{
+				      			obj._id = obj._id.toString();
+				      			return obj;
+				      		})
 			    	    	resolve(result);
 			      		}
 				    });
@@ -77,7 +81,9 @@ class MongoClient {
 				        	console.log(err);
 				        	reject(err)
 				      	} else {
-			    	    	resolve(result[0]);
+				      		let requiredObj = result[0];
+				      		requiredObj._id = requiredObj._id.toString();
+			    	    	resolve(requiredObj);
 			      		}
 				    });
 			  	}

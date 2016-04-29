@@ -150,14 +150,14 @@ class BaseModel extends ValidationModel {
 			if(dbPropertyValue!==null){
 				if(!propConfig.isArray){
 					let childAppObj = new propConstructor().valueOf();
-					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromDBModel(uiPropertyValue) : childAppObj;
+					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromDBModel(dbPropertyValue) : dbPropertyValue;
 				}
 				else{
 					let arr = [];
 					if(Array.isArray(dbPropertyValue)){
 						dbPropertyValue.forEach(function (value) {
 							let childAppObj = new propConstructor().valueOf();
-							arr.push((typeof childAppObj === "object") ? childAppObj.importFromUIModel(value) : value);
+							arr.push((typeof childAppObj === "object") ? childAppObj.importFromDBModel(value) : value);
 						})
 					}
 					this[appPropertyName]=arr;
@@ -244,6 +244,7 @@ class BaseModel extends ValidationModel {
 		return uiModel;
 	}
 
+
 	/**
 	 * this will export the model in DB model
 	 * @return {Object} return a DB model without any validation details etc
@@ -259,7 +260,7 @@ class BaseModel extends ValidationModel {
 			if(!iterableObj.hasOwnProperty(prop)  || typeof iterableObj[prop] === "function")
 				continue;
 		
-			let uiPropName = prop;
+			let dbPropName = prop;
 			let appPropName = dbMap ? dbMap[prop] : prop;
 			let value = this[appPropName];
 
@@ -267,7 +268,7 @@ class BaseModel extends ValidationModel {
 				value = value.exportToDBModel();
 			}
 
-			dbModel[uiPropName] = value;
+			dbModel[dbPropName] = value;
 		}
 		return dbModel;
 	}
