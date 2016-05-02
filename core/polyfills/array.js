@@ -3,7 +3,10 @@
 Array.prototype.exportToDBModel = function() {
 	let dbModelArray = [];
 	this.forEach((model) => {
-		dbModelArray.push(model.exportToDBModel());
+		let dbModel = model;
+		if(typeof model.exportToDBModel === "function")
+			dbModel=model.exportToDBModel();
+		dbModelArray.push(dbModel);
 	});
 	return dbModelArray;
 }
@@ -11,7 +14,11 @@ Array.prototype.exportToDBModel = function() {
 Array.prototype.exportToUIModel = function(){
 	let uiModelArray = [];
 	this.forEach((model) => {
-		uiModelArray.push(model.exportToUIModel());
+		let uiModel = model;
+		if(typeof model.exportToUIModel === "function")
+			uiModel=model.exportToUIModel();
+
+		uiModelArray.push(uiModel);
 	});
 	return uiModelArray;
 }
