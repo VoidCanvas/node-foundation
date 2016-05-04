@@ -16,3 +16,15 @@ Object.prototype.clone = function () {
 	var emptyObject = new this.constructor();
 	return emptyObject.extend(this);
 }
+
+Object.prototype.exportToDBModel = function () {
+	return this;
+}
+
+Object.prototype.exportToUIModel = function () {
+	return this;
+}
+
+Object.prototype.createUIModel = function () {
+	return this;
+}
