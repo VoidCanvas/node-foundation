@@ -8,6 +8,17 @@ let BaseModel = localrequire('baseModel');
 let validationConfig = require('./validations.json');
 let propertiesConfig = require('./properties.json');
 
+let customValidators = {
+	estdValidator: function (obj, estd) {
+		if(estd > new Date().getFullYear()){
+			return {
+				code: 12345,
+				msg: "Future companies are not allowed"
+			}
+		}
+	}
+}
+
 class OfficeModel extends BaseModel{
 
 	//the constructor of the model. 
@@ -24,6 +35,11 @@ class OfficeModel extends BaseModel{
 	getValidations(){
 		return validationConfig;	
 	} 
+
+	//validators
+	get customValidators() {
+		return customValidators;
+	}
 }
 
 module.exports = OfficeModel;

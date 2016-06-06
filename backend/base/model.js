@@ -208,6 +208,7 @@ class BaseModel extends ValidationModel {
 		let appProperties = properties.properties;
 		let uiMap = properties.uiMap;
 		let newModel = new ValidationModel();
+		newModel.customValidators = this.customValidators;
 
 		let iterableObj = (uiMap || appProperties);
 		for(var propName in iterableObj){

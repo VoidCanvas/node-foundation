@@ -15,7 +15,7 @@
 			"controlName":"companyName"
 		},
 		"estd":  {
-			"rules":["required", "number"],
+			"rules":["required", "number", "estdValidator"],
 			"controlName":"estd"
 		}
 	}
