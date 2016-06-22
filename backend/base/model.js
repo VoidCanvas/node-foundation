@@ -247,9 +247,11 @@ class BaseModel extends ValidationModel {
 		let validations = this.getValidations();
 		if(validations){
 			if(validations.ui)
-				newModel.validations = validations.ui.clone();
+				newModel.validations = validations.ui;
 			else
-				newModel.validations = validations.api.clone();
+				newModel.validations = validations.api;
+			
+			newModel.customValidators = this.customValidators;
 		}
 		return newModel;
 	}

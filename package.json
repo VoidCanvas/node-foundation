@@ -1,6 +1,6 @@
 {
   "name": "node-foundation",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "This node module can to use to setup and build your node project. You can automatically create routes, controllers etc and many other easy supports.",
   "main": "server.js",
   "scripts": {
