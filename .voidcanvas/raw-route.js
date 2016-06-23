@@ -21,11 +21,12 @@ class @routeName@ extends BaseRoute{
         //do your stuffs here
     }@controllerInitializationArea@
 
-    //A must have function
+/*
+    //Uncomment this function too if using custom route configuration
     getRouteConfig(){
         return routeConfig;
     }
-
+*/
     //A must have function
     getPath(){
         return path;

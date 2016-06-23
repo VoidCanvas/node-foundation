@@ -24,7 +24,7 @@ class BaseRoute {
 		let router = this._router = require('express').Router();
 
 		//setting up custom routes
-	    let routeConfig = this.getRouteConfig();
+	    let routeConfig = (this.getRouteConfig && this.getRouteConfig()) || {};
 	    if(routeConfig){
 	    	for(let routeName in routeConfig){
 	    		if(routeConfig.hasOwnProperty(routeName)){
