@@ -1,8 +1,6 @@
 "use strict"
 
-let BaseRoute = localrequire('baseRoute');
-
-@controllerDeclarationArea@
+let BaseRoute = localrequire('baseRoute');@controllerDeclarationArea@
 
 /**
  * Providing path is mandatory. 
@@ -11,21 +9,17 @@ let BaseRoute = localrequire('baseRoute');
 const path = "/@routePath@";
 
 /**
- * for custom route configuration
- * @type {Object}
- */
+ //for custom route configuration uncomment the following 
 const routeConfig = {
 
 }
+*/
 
 class @routeName@ extends BaseRoute{
     constructor(path){
         super(path);
-        
         //do your stuffs here
-    }
-
-    @controllerInitializationArea@
+    }@controllerInitializationArea@
 
     //A must have function
     getRouteConfig(){
@@ -42,8 +36,7 @@ class @routeName@ extends BaseRoute{
         res.end("Route @routeName@ is working");
     }
 
-    /*
-
+/*
     //[POST] : /
     create(req, res){
     }
@@ -57,11 +50,9 @@ class @routeName@ extends BaseRoute{
     }
 
     //[DELETE] : /:id
-    deleteById(req, res){
-        
+    deleteById(req, res){   
     }
-
-    */
+*/
 
 }
 
