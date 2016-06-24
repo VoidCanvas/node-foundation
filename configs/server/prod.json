@@ -14,7 +14,7 @@
 		"baseFolder": "./frontend"
 	},
 	"database":{
-		"client": "database.file-client",
+		"client": "database.mongo-client",
 		"source": "mongodb://username:password@mydb.dbserver.com:12345/db-name"
 	}
 }

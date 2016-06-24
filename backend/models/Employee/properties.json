@@ -5,7 +5,7 @@
 		},
 		"name":  {
 			"type": "String",
-			"value": "dudu"
+			"value": "UnNamed"
 		},
 		"worksFor": {
 			"type": "Office"

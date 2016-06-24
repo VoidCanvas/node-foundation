@@ -1,4 +1,3 @@
-# node-foundation
-This is a foundation project for any node application. It uses express to create apis
+# Void Canvas
 
-## This plugin is under construction
+This is the readme file. Please edit and use.
