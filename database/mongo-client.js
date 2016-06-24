@@ -11,6 +11,7 @@ class MongoClient {
 	}
 
 	save(obj){
+		obj._id = new ObjectID();
 		return new Promise(function (resolve, reject) {
 			mongoNative.connect(dbPath, function (err, db) {
 			  	if (err) {
