@@ -25,6 +25,14 @@ Object.prototype.exportToUIModel = function () {
 	return this;
 }
 
-Object.prototype.createUIModel = function () {
-	return this;
+Object.prototype.createUIModel = function (obj) {
+	return obj;
+}
+
+Object.prototype.importFromUIModel = function (uiModel) {
+	return uiModel;
+}
+
+Object.prototype.importFromDBModel = function (dbModel) {
+	return dbModel;
 }

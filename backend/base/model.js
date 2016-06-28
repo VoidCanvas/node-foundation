@@ -6,6 +6,9 @@ var ValidationModel = require('imvalid');
 //helper functions
 function getConstructor(propConfig) {
 	if(propConfig && propConfig.type){
+		if(typeof propConfig.type !== "string"){
+			return propConfig.type;
+		}
 		let propConstructor = propConfig.type;
 		let propDefaultValue = propConfig.value;
 		//setting up the appropriate constructor
