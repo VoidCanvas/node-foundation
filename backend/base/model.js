@@ -134,7 +134,7 @@ class BaseModel extends ValidationModel {
 					if(propConstructor===Date){
 						childAppObj = new propConstructor();
 					}
-					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromUIModel(uiPropertyValue) : uiPropertyValue;
+					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromUIModel(uiPropertyValue) : new propConstructor(uiPropertyValue).valueOf();
 				}
 				else{
 					let arr = [];
@@ -144,7 +144,7 @@ class BaseModel extends ValidationModel {
 							if(propConstructor===Date){
 								childAppObj = new propConstructor();
 							}
-							arr.push((typeof childAppObj === "object") ? childAppObj.importFromUIModel(value) : value);
+							arr.push((typeof childAppObj === "object") ? childAppObj.importFromUIModel(value) : new propConstructor(value).valueOf());
 						})
 					}
 					this[appPropertyName]=arr;
@@ -181,7 +181,7 @@ class BaseModel extends ValidationModel {
 					if(propConstructor===Date){
 						childAppObj = new propConstructor();
 					}
-					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromDBModel(dbPropertyValue) : dbPropertyValue;
+					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromDBModel(dbPropertyValue) : new propConstructor(dbPropertyValue).valueOf();
 				}
 				else{
 					let arr = [];
@@ -191,7 +191,7 @@ class BaseModel extends ValidationModel {
 							if(propConstructor===Date){
 								childAppObj = new propConstructor();
 							}
-							arr.push((typeof childAppObj === "object") ? childAppObj.importFromDBModel(value) : value);
+							arr.push((typeof childAppObj === "object") ? childAppObj.importFromDBModel(value) : new propConstructor(value).valueOf());
 						})
 					}
 					this[appPropertyName]=arr;
@@ -211,7 +211,6 @@ class BaseModel extends ValidationModel {
 		let appProperties = properties.properties;
 		let uiMap = properties.uiMap;
 		let newModel = new ValidationModel();
-		newModel.customValidators = this.customValidators;
 
 		let iterableObj = (uiMap || appProperties);
 		for(var propName in iterableObj){
@@ -230,7 +229,7 @@ class BaseModel extends ValidationModel {
 					if(propConstructor===Date){
 						childAppObj = new propConstructor();
 					}
-					newModel[propName] = (typeof childAppObj === "object") ? childAppObj.createUIModel(uiPropertyValue) : uiPropertyValue;
+					newModel[propName] = (typeof childAppObj === "object") ? childAppObj.createUIModel(uiPropertyValue) : new propConstructor(uiPropertyValue).valueOf();
 				}
 				else{
 					let arr = [];
@@ -240,7 +239,7 @@ class BaseModel extends ValidationModel {
 							if(propConstructor===Date){
 								childAppObj = new propConstructor();
 							}
-							arr.push((typeof childAppObj === "object") ? childAppObj.createUIModel(value) : value);
+							arr.push((typeof childAppObj === "object") ? childAppObj.createUIModel(value) : new propConstructor(value).valueOf());
 						})
 					}
 					newModel[propName]=arr;
@@ -250,10 +249,9 @@ class BaseModel extends ValidationModel {
 		let validations = this.getValidations();
 		if(validations){
 			if(validations.ui)
-				newModel.validations = validations.ui;
+				newModel.validations = validations.ui.clone();
 			else
-				newModel.validations = validations.api;
-			
+				newModel.validations = validations.api.clone();
 			newModel.customValidators = this.customValidators;
 		}
 		return newModel;
