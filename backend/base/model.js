@@ -134,7 +134,7 @@ class BaseModel extends ValidationModel {
 					if(propConstructor===Date){
 						childAppObj = new propConstructor();
 					}
-					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromUIModel(uiPropertyValue) : new propConstructor(uiPropertyValue).valueOf();
+					this[appPropertyName] = (typeof childAppObj.importFromUIModel === "function") ? childAppObj.importFromUIModel(uiPropertyValue) : new propConstructor(uiPropertyValue).valueOf();
 				}
 				else{
 					let arr = [];
@@ -144,7 +144,7 @@ class BaseModel extends ValidationModel {
 							if(propConstructor===Date){
 								childAppObj = new propConstructor();
 							}
-							arr.push((typeof childAppObj === "object") ? childAppObj.importFromUIModel(value) : new propConstructor(value).valueOf());
+							arr.push((typeof childAppObj.importFromUIModel === "function") ? childAppObj.importFromUIModel(value) : new propConstructor(value).valueOf());
 						})
 					}
 					this[appPropertyName]=arr;
@@ -181,7 +181,7 @@ class BaseModel extends ValidationModel {
 					if(propConstructor===Date){
 						childAppObj = new propConstructor();
 					}
-					this[appPropertyName] = (typeof childAppObj === "object") ? childAppObj.importFromDBModel(dbPropertyValue) : new propConstructor(dbPropertyValue).valueOf();
+					this[appPropertyName] = (typeof childAppObj.importFromDBModel === "function") ? childAppObj.importFromDBModel(dbPropertyValue) : new propConstructor(dbPropertyValue).valueOf();
 				}
 				else{
 					let arr = [];
@@ -191,7 +191,7 @@ class BaseModel extends ValidationModel {
 							if(propConstructor===Date){
 								childAppObj = new propConstructor();
 							}
-							arr.push((typeof childAppObj === "object") ? childAppObj.importFromDBModel(value) : new propConstructor(value).valueOf());
+							arr.push((typeof childAppObj.importFromDBModel === "function") ? childAppObj.importFromDBModel(value) : new propConstructor(value).valueOf());
 						})
 					}
 					this[appPropertyName]=arr;
@@ -229,7 +229,7 @@ class BaseModel extends ValidationModel {
 					if(propConstructor===Date){
 						childAppObj = new propConstructor();
 					}
-					newModel[propName] = (typeof childAppObj === "object") ? childAppObj.createUIModel(uiPropertyValue) : new propConstructor(uiPropertyValue).valueOf();
+					newModel[propName] = (typeof childAppObj.createUIModel === "function") ? childAppObj.createUIModel(uiPropertyValue) : new propConstructor(uiPropertyValue).valueOf();
 				}
 				else{
 					let arr = [];
@@ -239,7 +239,7 @@ class BaseModel extends ValidationModel {
 							if(propConstructor===Date){
 								childAppObj = new propConstructor();
 							}
-							arr.push((typeof childAppObj === "object") ? childAppObj.createUIModel(value) : new propConstructor(value).valueOf());
+							arr.push((typeof childAppObj.createUIModel === "function") ? childAppObj.createUIModel(value) : new propConstructor(value).valueOf());
 						})
 					}
 					newModel[propName]=arr;
@@ -276,7 +276,7 @@ class BaseModel extends ValidationModel {
 			let appPropName = uiMap ? uiMap[prop] : prop;
 			let value = this[appPropName];
 
-			if(value && typeof value === "object"){
+			if(value && typeof value.exportToUIModel === "function"){
 				value = value.exportToUIModel();
 			}
 
@@ -305,7 +305,7 @@ class BaseModel extends ValidationModel {
 			let appPropName = dbMap ? dbMap[prop] : prop;
 			let value = this[appPropName];
 
-			if(value && typeof value === "object"){
+			if(value && typeof value.exportToDBModel === "function"){
 				value = value.exportToDBModel();
 			}
 
